@@ -1,0 +1,16 @@
+<!doctype html>
+<title>Hello from Flask</title>
+{% if name %}
+<h1>Привет {{ name }}!</h1>
+<h2>Введите новое имя!</h2>
+<form action="/">
+    <p><input name="entered_name"></p>
+    <p><input type="submit"></p>
+</form>
+{% else %}
+<h1>Введите имя!</h1>
+<form action="/">
+    <p><input name="entered_name"></p>
+    <p><input type="submit"></p>
+</form>
+{% endif %}
