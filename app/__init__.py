@@ -1,10 +1,12 @@
+import os
+
+from decouple import config
 from flask import Flask
-from .views import views
+from flask_debugtoolbar import DebugToolbarExtension
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from decouple import config
-from flask_debugtoolbar import DebugToolbarExtension
-import os
+
+from .views import views
 
 db = SQLAlchemy()
 toolbar = DebugToolbarExtension()
@@ -18,6 +20,8 @@ def create_app():
     app.config['SECRET_KEY'] = config('SECRET_KEY', cast=str)
     app.config['SQLALCHEMY_DATABASE_URI'] = config('DATABASES', cast=str)
     app.register_blueprint(views, url_prefix='/')
+    from app.api import views as api_views
+    app.register_blueprint(api_views, url_prefix='/api')
     app.debug = config('DEBUG', cast=bool)
     db.init_app(app)
     toolbar.init_app(app)

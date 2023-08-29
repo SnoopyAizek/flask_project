@@ -12,5 +12,13 @@ class User(db.Model):
     password = db.Column(db.String(150))
     role = db.Column(db.SmallInteger, default=ROLE_USER)
 
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email
+        }
+        return data
+
     def __str__(self):
         return f'User: {self.username}'
