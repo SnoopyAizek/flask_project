@@ -20,8 +20,10 @@ def create_app():
     app.config['SECRET_KEY'] = config('SECRET_KEY', cast=str)
     app.config['SQLALCHEMY_DATABASE_URI'] = config('DATABASES', cast=str)
     app.register_blueprint(views, url_prefix='/')
-    from app.api import views as api_views
-    app.register_blueprint(api_views, url_prefix='/api')
+    from app.errors import bp as errors_bp
+    app.register_blueprint(errors_bp)
+    from app.api import bp as api_bp
+    app.register_blueprint(api_bp, url_prefix='/api')
     app.debug = config('DEBUG', cast=bool)
     db.init_app(app)
     toolbar.init_app(app)
